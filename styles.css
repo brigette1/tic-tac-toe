@@ -1,0 +1,41 @@
+body {
+    display: flex; 
+    align-items: center;
+    justify-content: center;
+    margin: 5vh;
+    flex-direction: column;
+    background-color: #fee5e7;
+}
+
+.title {
+    font-size: 50px;
+    font-weight: bold;
+    color: #ff6700;
+    font-family: 'Courier New', Courier, monospace;
+    margin: 10px;
+}
+
+.board {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    width: 400px; 
+    height: 400px;
+}
+
+.cell {
+    display: flex;
+    border: solid rgb(255, 255, 255) 2px;
+    background-color: #ff9248;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    font-size: 7em;
+    font-family: 'Courier New', Courier, monospace;
+    color: white;
+    cursor: pointer;
+}
+
+.newgame, .results {
+    margin: 10px;
+}
