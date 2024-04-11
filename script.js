@@ -1,6 +1,4 @@
 function gameBoard(players) {
-    let docCell = document.querySelectorAll('.cell')
-
     let rows = 2; 
     let columns = 2;
     let board = [];
@@ -14,6 +12,17 @@ function gameBoard(players) {
 
     const getBoard = () => board;
 
+    const printBoard = () => {
+        for (let i = 0; i < rows; i++) {
+            let rowString = ' ';
+            for (let j = 0; j < columns; j++) {
+                rowString += board[i][j].getValue() + ' ';
+            }
+            console.log(rowString);
+        }
+    };
+
+    //ui
     const putToken = (currentPlayer) => {
         token = currentPlayer.token; 
 
@@ -24,9 +33,7 @@ function gameBoard(players) {
         };
     }
 
-    docCell.forEach(cell => {
-        cell.addEventListener('click', () => putToken())});
-
+    //backend
     const dropToken = (row, column, currentPlayer) => {
         if (row < 0 || column < 0 || row >= rows || column >= columns) {
             console.log('Invalid input')
@@ -45,22 +52,17 @@ function gameBoard(players) {
         return true;
     };
 
-    const printBoard = () => {
-        for (let i = 0; i < rows; i++) {
-            let rowString = ' ';
-            for (let j = 0; j < columns; j++) {
-                rowString += board[i][j].getValue() + ' ';
-            }
-            console.log(rowString);
-        }
-    };
+    let docCell = document.querySelectorAll('.cell')
+    
+    docCell.forEach(cell => {
+        cell.addEventListener('click', () => putToken())});
 
-        //state of cell 
+    //state of cell 
     function Cell(currentPlayer) {
         
         let value = 0; 
 
-        const addToken = () => {
+        const addToken = (currentPlayer) => {
             value = currentPlayer.token;
         };
 
@@ -68,15 +70,18 @@ function gameBoard(players) {
 
         return {addToken, getValue};
     }
-    return {getBoard, dropToken, printBoard, board};
+    return {getBoard, dropToken, printBoard};
 }
 
+const getBoard = getBoard();
 
-function gameControl(board, playerOneName = 'P1', playerTwoName = 'P2') {
-    let currentPlayer = 0;
-    
+
+function gameControl(board, playerOneName, playerTwoName) {
     let rows = 2;
     let columns = 2; 
+    let board = getBoard;
+
+    let currentPlayer = 0;
     
     const players = [
         {
@@ -89,18 +94,16 @@ function gameControl(board, playerOneName = 'P1', playerTwoName = 'P2') {
         }
     ]
 
-    //switch player turn 
-    const switchPlayer = () => {
-        let playerOneTurn = !playerOneTurn;
-    }
-
     const getCurrentPlayer = () => {
         currentPlayer = players[1] ? players[0] : players[1];
 
         return currentPlayer;
     }
 
-    //play new round 
+    //switch player turn 
+    const switchPlayer = () => {
+        let playerOneTurn = !playerOneTurn;
+    }
 
     const newGame = () => {
         for (i = 0; i < rows; i++) {
@@ -124,8 +127,8 @@ function gameControl(board, playerOneName = 'P1', playerTwoName = 'P2') {
     }
 
     //check for win 
-    let playerOne;
-    let playerTwo;
+    let playerOne = '';
+    let playerTwo ='';
 
     if (
         board.includes([1, 1, 1]) || 
