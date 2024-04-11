@@ -67,7 +67,7 @@ function gameBoard(players) {
         const getValue = () => value;
 
         return {addToken, getValue};
-    }p
+    }
     return {getBoard, dropToken, printBoard, board};
 }
 
