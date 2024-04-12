@@ -1,12 +1,14 @@
-function gameBoard(players) {
-    let rows = 2; 
-    let columns = 2;
+function gameBoard(currentPlayer) {
+    const docCell = document.querySelectorAll('.cell')
+
+    const rows = 2; 
+    const columns = 2;
     let board = [];
 
     for (let i = 0; i < rows; i++) {
         board[i] = []; 
         for (let j = 0; j < columns; j++) {
-            board[i].push(Cell(currentPlayer.token));
+            board[i].push(Cell(currentPlayer().token));
         }
     }
 
@@ -22,16 +24,9 @@ function gameBoard(players) {
         }
     };
 
-    //ui
-    const putToken = (currentPlayer) => {
-        token = currentPlayer.token; 
+    docCell.forEach(cell => {
+        cell.addEventListener('click', () => putToken(currentPlayer, cell))});
 
-        if (token === 1) {
-            docCell.textContent = 'X';
-        } else if (token === 2) {
-            docCell.textContent = 'O';
-        };
-    }
 
     //backend
     const dropToken = (row, column, currentPlayer) => {
@@ -52,17 +47,12 @@ function gameBoard(players) {
         return true;
     };
 
-    let docCell = document.querySelectorAll('.cell')
-    
-    docCell.forEach(cell => {
-        cell.addEventListener('click', () => putToken())});
-
     //state of cell 
     function Cell(currentPlayer) {
         
         let value = 0; 
 
-        const addToken = (currentPlayer) => {
+        const addToken = () => {
             value = currentPlayer.token;
         };
 
@@ -70,18 +60,18 @@ function gameBoard(players) {
 
         return {addToken, getValue};
     }
-    return {getBoard, dropToken, printBoard};
+    return {getBoard, dropToken, printBoard, board, rows, columns};
 }
 
-const getBoard = getBoard();
+
+
+
+
 
 
 function gameControl(board, playerOneName, playerTwoName) {
-    let rows = 2;
-    let columns = 2; 
-    let board = getBoard;
-
     let currentPlayer = 0;
+    let totalMoves = 0;
     
     const players = [
         {
@@ -95,14 +85,97 @@ function gameControl(board, playerOneName, playerTwoName) {
     ]
 
     const getCurrentPlayer = () => {
-        currentPlayer = players[1] ? players[0] : players[1];
-
+        currentPlayer = players[totalMoves % 2];
         return currentPlayer;
     }
 
     //switch player turn 
     const switchPlayer = () => {
-        let playerOneTurn = !playerOneTurn;
+        totalMoves++; 
+        currentPlayer = getCurrentPlayer();
+    }
+
+    //play round 
+
+    const playRound = () => {
+        switchPlayer();
+        console.log("It's" + getCurrentPlayer().name + ("'s turn."))
+        board.printBoard();
+
+        return {switchPlayer, playRound};
+    }  
+
+    //check for win 
+    let playerOne = '';
+    let playerTwo ='';
+
+    const checkWin =  () => {
+
+        //check rows
+        for (i = 0; i < board.length; i++) {
+            if (!board[i][0] === 0 && board[i][0] === board[i][1] && board[i][1] === board[i][2]) {
+                let winner = board[i][0].getValue();
+                return winner;
+            }
+        }
+
+        //check columns 
+        for (j = 0; j < board.length; j++) {
+            if (!board[0][j] === 0 && board[0][j] === board[1][j] && board[1][j] === board[2][j]) {
+                let winner = board[0][j].getValue();
+                return winner;
+            }
+            //enter conditionals
+        }
+
+        //check diagonals - initiate with if/then conditionals
+        if (!board[0][0] === 0 && board[1][1] === board [0][0] && board[1][1] === board[2][2]) {
+            let winner = board[0][0].getValue();
+            return winner;
+        }
+
+        if (!board[0][2] === 0 && board[0][2] === board[1][1] && board[1][1] === board[2][0]) {
+            let winner = board[0][2].getValue();
+            return winner;
+        }
+
+        //determine winner 
+        if (winner === 1) {
+            playerOne = 'win';
+            return playerOne;
+        } else if (winner === 2) {
+            playerTwo = 'win'
+            return playerTwo
+        }
+
+        //check for draw
+        if (!playerOne === 'win' && !playerTwo === 'win' && board.every(item => {
+            item > 0 === true;})) {
+                console.log ("It's a draw!");
+        } else {
+            return;
+        }
+    }
+    
+    return {getCurrentPlayer, playRound, checkWin, players};
+}
+
+
+
+function userInterface(rows, columns, board) {
+    //ui
+    const putToken = (currentPlayer, cell) => {
+        let token = currentPlayer.token; 
+        let row = parseInt(cell.dataset.row);
+        let column = parseInt(cell.dataset.column);
+
+        if (token === 1) {
+            cell.textContent = 'X';
+        } else if (token === 2) {
+            cell.textContent = 'O';
+        };
+
+        board.dropToken(row, column, currentPlayer);
     }
 
     const newGame = () => {
@@ -116,56 +189,16 @@ function gameControl(board, playerOneName, playerTwoName) {
         console.log('New game has begun!');
     }
 
-    //play round 
-
-    const playRound = () => {
-        switchPlayer();
-        console.log("It's" + getCurrentPlayer().name + ("'s turn."))
-        board.printBoard();
-
-        return {switchPlayer, playRound};
-    }
-
-    //check for win 
-    let playerOne = '';
-    let playerTwo ='';
-
-    if (
-        board.includes([1, 1, 1]) || 
-        board.includes([1, 0, 0] && [0, 1, 0] && [0, 0, 1]) ||
-        board.includes([1, 0, 0] && [1, 0, 0] && [1, 0, 0]) ||
-        board.includes ([0, 1, 0] && [0, 1, 0] && [0, 1, 0]) ||
-        board.includes([0, 0, 1] && [0, 0, 1] && [0, 0, 1])
-    ) {
-        playerOne = 'win'
-        console.log (players[0].name + 'wins!');
-    } 
-    
-    if (
-        board.includes([2, 2, 2]) || 
-        board.includes([2, 0, 0] && [0, 2, 0] && [0, 0, 2]) ||
-        board.includes([2, 0, 0] && [2, 0, 0] && [2, 0, 0]) ||
-        board.includes ([0, 2, 0] && [0, 2, 0] && [0, 2, 0]) ||
-        board.includes([0, 0, 2] && [0, 0, 2] && [0, 0, 2])
-    ) {
-        playerTwo = 'win'
-        console.log (players[1].name + 'wins!'); 
-    } 
-
-    //check for draw
-    if (!playerOne === 'win' && !playerTwo === 'win' && board.every(item => {
-        item > 0 === true;})) {
-            console.log ("It's a draw!");
-    } else {
-        return;
-    }
-    
-    return {getCurrentPlayer, newGame, playRound, players};
+    return {putToken, newGame};
 }
 
 const players = gameControl().players;
 const board = gameBoard();
-const control = gameControl();
+const gameBoardInstance = gameBoard().board;
+const control = gameControl(gameBoardInstance, "P1", "P2");
+const ui = userInterface();
 
 control.newGame();
 control.playRound();
+
+
