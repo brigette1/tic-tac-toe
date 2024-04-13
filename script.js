@@ -8,7 +8,7 @@ function gameBoard(currentPlayer) {
     for (let i = 0; i < rows; i++) {
         board[i] = []; 
         for (let j = 0; j < columns; j++) {
-            board[i].push(Cell(currentPlayer().token));
+            board[i].push(' ');
         }
     }
 
@@ -38,7 +38,6 @@ function gameBoard(currentPlayer) {
             return false;
         } else {
             board[row][column].addToken(currentPlayer)};
-
 
         if (currentPlayer === players[0] || currentPlayer === players[1]) {
             putToken();
@@ -96,10 +95,9 @@ function gameControl(board, playerOneName, playerTwoName) {
     }
 
     //play round 
-
     const playRound = () => {
         switchPlayer();
-        console.log("It's" + getCurrentPlayer().name + ("'s turn."))
+        console.log("It's" + getCurrentPlayer().name + "'s turn.")
         board.printBoard();
 
         return {switchPlayer, playRound};
@@ -129,7 +127,7 @@ function gameControl(board, playerOneName, playerTwoName) {
         }
 
         //check diagonals - initiate with if/then conditionals
-        if (!board[0][0] === 0 && board[1][1] === board [0][0] && board[1][1] === board[2][2]) {
+        if (!board[0][0] === 0 && board[1][1] === board[0][0] && board[1][1] === board[2][2]) {
             let winner = board[0][0].getValue();
             return winner;
         }
@@ -156,9 +154,11 @@ function gameControl(board, playerOneName, playerTwoName) {
             return;
         }
     }
-    
+
     return {getCurrentPlayer, playRound, checkWin, players};
 }
+
+
 
 
 
@@ -175,7 +175,6 @@ function userInterface(rows, columns, board) {
             cell.textContent = 'O';
         };
 
-        board.dropToken(row, column, currentPlayer);
     }
 
     const newGame = () => {
@@ -193,7 +192,7 @@ function userInterface(rows, columns, board) {
 }
 
 const players = gameControl().players;
-const board = gameBoard();
+const board = gameBoard(currentPlayer);
 const gameBoardInstance = gameBoard().board;
 const control = gameControl(gameBoardInstance, "P1", "P2");
 const ui = userInterface();
