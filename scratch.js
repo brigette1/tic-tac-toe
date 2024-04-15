@@ -1,7 +1,16 @@
 function gameBoard() {
+    const rows = 2; 
+    const columns = 2; 
+    let board = []; 
+
+    for (let i = 0; i < rows; i++) {
+        board[i] = []; 
+        for (let j = 0; j < columns; j++) {
+            board[i].push(' '); 
+        }
+    }
 
     let moves = 0; 
-
     const totalMoves = () => {
         moves++;
         return moves;
@@ -14,17 +23,6 @@ function gameBoard() {
             printBoard();
         } 
     })
-
-    // const rows = 2; 
-    // const columns = 2; 
-    // // let board = []; 
-
-    // for (let i = 0; i < rows; i++) {
-    //     board[i] = []; 
-    //     for (let j = 0; j < columns; j++) {
-    //         board[i].push(' '); 
-    //     }
-    // }
 
     const printBoard = () => {
         const cells = visualBoard.querySelectorAll('.cell');
@@ -42,11 +40,11 @@ function gameBoard() {
     const toggleToken = (cell) => {
         let currentToken = totalMoves() % 2; 
 
-        if (cell.textContent === ' ') {
+        if (cell.textContent === '') {
             if (currentToken === 0) {
-                return cell.textContent = 'X';
+                cell.textContent = 'O';
             } else {
-                return cell.textContent = 'O';
+                cell.textContent = 'X';
             }
         } else {
             return;
