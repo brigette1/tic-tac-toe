@@ -39,3 +39,7 @@ body {
 .newgame, .results {
     margin: 10px;
 }
+
+.content {
+    display: grid;
+}

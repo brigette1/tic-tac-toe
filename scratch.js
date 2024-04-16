@@ -1,4 +1,6 @@
 const visualBoard = document.querySelector('.board');
+const showPlayer = document.querySelector('.playerturn');
+
 function gameBoard() {
 
     //keep track of moves
@@ -16,14 +18,19 @@ function gameBoard() {
         } 
     })
 
+    showPlayer.textContent = "PLAYER ONE'S TURN (X)";
+
     //cells listens for click, and assigns an x or o 
     const toggleToken = (cell) => {
         let currentToken = totalMoves() % 2; 
 
         if (cell.textContent === '') {
             if (currentToken === 0) {
+                showPlayer.textContent = "PLAYER ONE'S TURN (X)";
                 return cell.textContent = 'O';
+
             } else {
+                showPlayer.textContent = "PLAYER TWO'S TURN (O)";
                 return cell.textContent = 'X';
             }
         } else {
@@ -54,7 +61,7 @@ function checkWin() {
     const resultPanel = document.querySelector('.displayresults');
     const playerOnePts = document.querySelector('.playeronepoints');
     const playerTwoPts = document.querySelector('.playertwopoints');
-    
+
     const cellArray = []
 
     let cells = document.querySelectorAll('.cell');
@@ -120,8 +127,8 @@ function checkWin() {
     if (findWinner() === playerOne.token) {
         playerOne.win = true; 
         playerOne.points++;
-        playerOnePts.textContent = 'Player One: ' + playerOne.points;
-        playerTwoPts.textContent = 'Player Two: ' + playerTwo.points;
+        playerOnePts.textContent = 'Player One (X): ' + playerOne.points;
+        playerTwoPts.textContent = 'Player Two (O): ' + playerTwo.points;
     
         resultPanel.textContent = playerOne.winStatement;
         endRound = true;
@@ -130,8 +137,8 @@ function checkWin() {
     if (findWinner() === playerTwo.token) {
         playerTwo.win = true; 
         playerTwo.points++;
-        playerOnePts.textContent = 'Player One: ' + playerOne.points;
-        playerTwoPts.textContent = 'Player Two: ' + playerTwo.points;
+        playerOnePts.textContent = 'Player One (X): ' + playerOne.points;
+        playerTwoPts.textContent = 'Player Two (O): ' + playerTwo.points;
 
         resultPanel.textContent = playerTwo.winStatement;
         endRound = true;
@@ -143,32 +150,45 @@ function checkWin() {
     }
 
     //new round & game
-    newRoundBtn = document.querySelector('.newround')
+    newRoundBtn = document.querySelector('.newround');
     newRoundBtn.addEventListener('click', () => {
         newRound();
     })
 
 
     function newRound() {
-        if (playerOne.points < 5 && playerTwo.points < 5) {
+        if ((playerOne.points < 5 && playerTwo.points < 5) || (playerOne.points === 0 && playerTwo.points === 0)) {
             playerOne.win = false; 
             playerTwo.win = false;
             cells.forEach(cell => cell.textContent = '');
             resultPanel.textContent = '';
             displayRounds.textContent = 'ROUND ' + rounds;
-        } 
+        }
         endRound = false;
     }
 
+    newGameBtn = document.querySelector('.newgame');
+    newGameBtn.addEventListener('click', () => {
+        newGame();
+    })
+
     function newGame() {
-        if (playerOne.points === 5 || playerTwo.points === 5) {
-            //
-        }
+        playerOne.points = 0; 
+        playerTwo.points = 0;
+        playerOnePts.textContent = 'Player One (X): ' + playerOne.points;
+        playerTwoPts.textContent = 'Player Two (O): ' + playerTwo.points;
+
+        playerOne.win = false; 
+        playerTwo.win = false;
+
+        cells.forEach(cell => cell.textContent = '');
+        resultPanel.textContent = '';
+
+        rounds = 1;
+        displayRounds.textContent = 'ROUND ' + rounds;
+        endRound = false;
     }
-    
 }
-
-
 
 
 

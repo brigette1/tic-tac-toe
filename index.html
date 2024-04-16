@@ -8,29 +8,33 @@
     <script src="scratch.js" defer></script>
 </head>
 <body>
-    <div class="title">Tic Tac Toe</div>
-    <div class="countrounds"></div>
+    <h1 class="title">Tic Tac Toe</h1>
 
-    <div class="board">
-        <div class="cell 1" data-row="0" data-column="0"></div>
-        <div class="cell 2" data-row="0" data-column="1"></div>
-        <div class="cell 3" data-row="0" data-column="2"></div>
-        <div class="cell 4" data-row="1" data-column="0"></div>
-        <div class="cell 5" data-row="1" data-column="1"></div>
-        <div class="cell 6" data-row="1" data-column="2"></div>
-        <div class="cell 7" data-row="2" data-column="0"></div>
-        <div class="cell 8" data-row="2" data-column="1"></div>
-        <div class="cell 9" data-row="2" data-column="2"></div>
+    <div class="content">
+        <div class="game">
+            <div class="countrounds"></div>
+            <div class="playerturn"></div>
+            <div class="board">
+                <div class="cell 1" data-row="0" data-column="0"></div>
+                <div class="cell 2" data-row="0" data-column="1"></div>
+                <div class="cell 3" data-row="0" data-column="2"></div>
+                <div class="cell 4" data-row="1" data-column="0"></div>
+                <div class="cell 5" data-row="1" data-column="1"></div>
+                <div class="cell 6" data-row="1" data-column="2"></div>
+                <div class="cell 7" data-row="2" data-column="0"></div>
+                <div class="cell 8" data-row="2" data-column="1"></div>
+                <div class="cell 9" data-row="2" data-column="2"></div>
+            </div>
+        </div>
+        <div class="interact">
+            <div class="results">Results:</div>
+            <div class="displayresults"></div>
+            <div class="points">Points:</div>
+            <div class="playeronepoints"></div>
+            <div class="playertwopoints"></div>
+            <button class="newround">New Round</button>
+            <button class="newgame">New Game</button>
+        </div>
     </div>
-
-    <div class="results">Results:</div>
-    <div class="displayresults"></div>
-
-    <div class="points">Points:</div>
-    <div class="playeronepoints"></div>
-    <div class="playertwopoints"></div>
-
-    <button class="newround">New Round</button>
-    <button class="newgame">New Game</button>
 </body>
 </html>
