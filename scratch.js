@@ -1,3 +1,4 @@
+const visualBoard = document.querySelector('.board');
 function gameBoard() {
 
     //keep track of moves
@@ -8,9 +9,8 @@ function gameBoard() {
     }
 
     //control board activity 
-    const visualBoard = document.querySelector('.board');
     visualBoard.addEventListener('click', (event) => {
-        if (event.target.classList.contains('cell')) {
+        if (endRound === false && event.target.classList.contains('cell')) {
             toggleToken(event.target);
             checkWin();
         } 
@@ -35,6 +35,7 @@ function gameBoard() {
 let rounds = 1;
 const displayRounds = document.querySelector('.countrounds');
 displayRounds.textContent = 'ROUND 1';
+let endRound = false;
 
 const playerOne = {
     token: 'X',
@@ -50,6 +51,10 @@ const playerTwo = {
 }
 
 function checkWin() {
+    const resultPanel = document.querySelector('.displayresults');
+    const playerOnePts = document.querySelector('.playeronepoints');
+    const playerTwoPts = document.querySelector('.playertwopoints');
+    
     const cellArray = []
 
     let cells = document.querySelectorAll('.cell');
@@ -104,16 +109,13 @@ function checkWin() {
         }
 
         if (checkEmptyCells() === false) {
-            console.log('tie!') 
+            resultPanel.textContent = ("It's a tie!")
         } else {
             return;
         }
     }
 
     //update player properties and display results
-    const resultPanel = document.querySelector('.displayresults');
-    const playerOnePts = document.querySelector('.playeronepoints');
-    const playerTwoPts = document.querySelector('.playertwopoints');
 
     if (findWinner() === playerOne.token) {
         playerOne.win = true; 
@@ -122,7 +124,8 @@ function checkWin() {
         playerTwoPts.textContent = 'Player Two: ' + playerTwo.points;
     
         resultPanel.textContent = playerOne.winStatement;
-        } 
+        endRound = true;
+    } 
 
     if (findWinner() === playerTwo.token) {
         playerTwo.win = true; 
@@ -131,6 +134,7 @@ function checkWin() {
         playerTwoPts.textContent = 'Player Two: ' + playerTwo.points;
 
         resultPanel.textContent = playerTwo.winStatement;
+        endRound = true;
     }
 
     //update rounds
@@ -153,6 +157,7 @@ function checkWin() {
             resultPanel.textContent = '';
             displayRounds.textContent = 'ROUND ' + rounds;
         } 
+        endRound = false;
     }
 
     function newGame() {
