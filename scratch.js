@@ -32,28 +32,30 @@ function gameBoard() {
     }
 }
 
+let rounds = 1;
+const displayRounds = document.querySelector('.countrounds');
+displayRounds.textContent = 'ROUND 1';
+
+const playerOne = {
+    token: 'X',
+    win: false,
+    winStatement: 'Player one wins!',
+    points: 0
+}
+const playerTwo = {
+    token: 'O',
+    win: false, 
+    winStatement: 'Player two wins!',
+    points: 0
+}
 
 function checkWin() {
     const cellArray = []
-    const displayRounds = document.querySelector('.countrounds');
 
     let cells = document.querySelectorAll('.cell');
     cells.forEach(cell => {
         cellArray.push(cell);
     })
-
-    const playerOne = {
-        token: 'X',
-        win: false,
-        winStatement: 'Player one wins!',
-        points: 0
-    }
-    const playerTwo = {
-        token: 'O',
-        win: false, 
-        winStatement: 'Player two wins!',
-        points: 0
-    }
 
     function findWinner() {
         //check rows
@@ -131,11 +133,9 @@ function checkWin() {
         resultPanel.textContent = playerTwo.winStatement;
     }
 
-    //display rounds
-    let rounds = 0;
-    if (findWinner !== false || checkEmptyCells === false) {
+    //update rounds
+    if (findWinner() !== false || checkEmptyCells() === false) {
         rounds++;
-        displayRounds.innerText = 'Round ' + rounds;
     }
 
     //new round & game
@@ -151,6 +151,7 @@ function checkWin() {
             playerTwo.win = false;
             cells.forEach(cell => cell.textContent = '');
             resultPanel.textContent = '';
+            displayRounds.textContent = 'ROUND ' + rounds;
         } 
     }
 
@@ -159,7 +160,13 @@ function checkWin() {
             //
         }
     }
+    
 }
+
+
+
+
+
 
 const initiateBoard = gameBoard();
 const winner = checkWin();
