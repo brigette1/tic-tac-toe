@@ -4,23 +4,50 @@ body {
     justify-content: center;
     margin: 5vh;
     flex-direction: column;
-    background-color: #fee5e7;
+    background-color: #fff1f1;
 }
 
 .title {
-    font-size: 50px;
+    font-size: 45px;
     font-weight: bold;
     color: #ff6700;
     font-family: 'Courier New', Courier, monospace;
     margin: 10px;
 }
 
+.content {
+    display: flex;
+    justify-content: center;
+    background-color: rgb(231, 230, 230);
+    border: solid 1.5px #ff6700;
+}
+
+.boardheader {
+    font-size: 20px;
+    font-weight: bold;
+    color: #ff6700;
+    font-family: 'Courier New', Courier, monospace;
+    margin: 10px;
+    display: flex; 
+    flex-direction: column;
+    align-items: center;
+    background-color: white;
+    padding: 10px;
+}
+
+.playerturn {
+    padding-top: 10px;
+    color: #ffb38a;
+}
+
+
 .board {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: repeat(3, 1fr);
-    width: 400px; 
-    height: 400px;
+    width: 380px; 
+    height: 380px;
+    margin: 20px;
 }
 
 .cell {
@@ -30,16 +57,58 @@ body {
     justify-content: center;
     align-items: center;
     font-weight: bold;
-    font-size: 7em;
+    font-size: 6em;
     font-family: 'Courier New', Courier, monospace;
     color: white;
     cursor: pointer;
 }
 
-.newgame, .results {
-    margin: 10px;
+
+.interact {
+    background: white;
+    display: flex;
+    flex-direction: column;
+    height: 480px;
+    margin: 20px;
+    align-items: center;
+    justify-content: center;
 }
 
-.content {
-    display: grid;
+.newgame, .displayresults, .points, .playeronepoints, .playertwopoints, .newround {
+    margin: 10px;
+    font-size: 20px;
+    font-weight: bold;
+    color: #ff6700;
+    font-family: 'Courier New', Courier, monospace;
+    margin: 15px 5px 15px 5px;
 }
+
+.displayresults {
+    text-align: center;
+}
+
+.pointdisplay {
+    margin: 25px 5px 25px 5px;
+}
+
+.points {
+    color: #ffb38a;
+    text-align: center;
+}
+
+.button {
+    color: #ff6700;
+    background-color: white;
+    border: 3px solid #ffb38a;
+    transition-duration: 0.7s;
+    font-size: 18px;
+    padding: 10px 20px;
+    border-radius: 25px;
+}
+
+.button:hover {
+    background-color: #ff6700;
+    border: 3px solid #ff6700;
+    color: white;
+}
+

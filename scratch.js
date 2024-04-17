@@ -47,13 +47,13 @@ let endRound = false;
 const playerOne = {
     token: 'X',
     win: false,
-    winStatement: 'Player one wins!',
+    winStatement: 'PLAYER ONE WINS!',
     points: 0
 }
 const playerTwo = {
     token: 'O',
     win: false, 
-    winStatement: 'Player two wins!',
+    winStatement: 'PLAYER TWO WINS!',
     points: 0
 }
 
@@ -116,7 +116,7 @@ function checkWin() {
         }
 
         if (checkEmptyCells() === false) {
-            resultPanel.textContent = ("It's a tie!")
+            resultPanel.textContent = ("IT'S A TIE!")
         } else {
             return;
         }
