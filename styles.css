@@ -74,7 +74,7 @@ body {
     justify-content: center;
 }
 
-.newgame, .displayresults, .points, .playeronepoints, .playertwopoints, .newround {
+.newgame, .displayresults, .instructions, .points, .playeronepoints, .playertwopoints, .newround {
     margin: 10px;
     font-size: 20px;
     font-weight: bold;

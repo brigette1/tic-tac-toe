@@ -48,12 +48,14 @@ const playerOne = {
     token: 'X',
     win: false,
     winStatement: 'PLAYER ONE WINS!',
+    winGame: 'PLAYER ONE WINS GAME!',
     points: 0
 }
 const playerTwo = {
     token: 'O',
     win: false, 
     winStatement: 'PLAYER TWO WINS!',
+    winGame: 'PLAYER TWO WINS GAME!',
     points: 0
 }
 
@@ -61,6 +63,7 @@ function checkWin() {
     const resultPanel = document.querySelector('.displayresults');
     const playerOnePts = document.querySelector('.playeronepoints');
     const playerTwoPts = document.querySelector('.playertwopoints');
+    const giveInstructions = document.querySelector('.instructions');
 
     const cellArray = []
 
@@ -165,6 +168,15 @@ function checkWin() {
             displayRounds.textContent = 'ROUND ' + rounds;
         }
         endRound = false;
+
+        if (playerOne.points === 5) {
+            resultPanel.textContent = playerOne.winGame;
+            giveInstructions.textContent = 'Click "New Game" for a rematch!'
+        }
+        if (playerTwo.points === 5) {
+            resultPanel.textContent = playerTwo.winGame;
+            giveInstructions.textContent = 'Click "New Game" for a rematch!'
+        }
     }
 
     newGameBtn = document.querySelector('.newgame');
@@ -187,11 +199,10 @@ function checkWin() {
         rounds = 1;
         displayRounds.textContent = 'ROUND ' + rounds;
         endRound = false;
+
+        giveInstructions.textContent = ''
     }
 }
-
-
-
 
 const initiateBoard = gameBoard();
 const winner = checkWin();
